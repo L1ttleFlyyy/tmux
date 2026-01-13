@@ -35,7 +35,7 @@ show_color() {
     local hex=$2
 
     # Convert hex to RGB
-    read -r r g b <<< $(hex_to_rgb "$hex")
+    read -r r g b <<< "$(hex_to_rgb "$hex")"
 
     # Create colored square using background color + space
     local colored_square="\033[48;2;${r};${g};${b}m  \033[0m"
