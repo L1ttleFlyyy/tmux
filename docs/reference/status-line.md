@@ -14,6 +14,10 @@ set -g status-right-length 100
 set -g status-right "#{E:@catppuccin_status_application}#{E:@catppuccin_status_session}"
 set -g status-left ""
 ```
+Some notes about expanding options when setting the status line:
+* Options are expanded as format strings by placing `E:` before the option name.
+* When a module status string contains a reference to another variable, you have to add the `-F` flag that treats the value passed as a format string that is immediately expanded, that is use `set -gF` (see tmux [`set-option`](https://man.openbsd.org/OpenBSD-current/man1/tmux.1#set-option) man page).
+* Example for such a case is the [battery](#battery-module) module below, where the status contains the format string `#{battery_percentage}` that needs to be further expanded.
 
 ## Customizing modules
 
@@ -110,6 +114,23 @@ run '~/.tmux/plugins/tpm/tpm'
 run ~/.config/tmux/plugins/catppuccin/tmux/catppuccin.tmux
 
 set -agF status-right "#{E:@catppuccin_status_cpu}"
+
+set -g @plugin 'tmux-plugins/tmux-cpu'
+run '~/.tmux/plugins/tpm/tpm'
+```
+
+## RAM module
+
+**Requirements:** This module depends on [tmux-cpu](https://github.com/tmux-plugins/tmux-cpu/tree/master).
+
+**Install:** The preferred way to install tmux-cpu is using [TPM](https://github.com/tmux-plugins/tpm).
+
+**Configure:**
+
+```sh
+run ~/.config/tmux/plugins/catppuccin/tmux/catppuccin.tmux
+
+set -agF status-right "#{E:@catppuccin_status_ram}"
 
 set -g @plugin 'tmux-plugins/tmux-cpu'
 run '~/.tmux/plugins/tpm/tpm'
